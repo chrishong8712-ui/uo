@@ -1,0 +1,101 @@
+
+  setvar container_to_catalog
+
+  wait 250
+  
+  dclick container_to_catalog
+
+  wait 250
+
+  setvar take_container
+
+  wait 250
+  
+  dclick take_container
+
+  wait 250
+
+  if not listexists item_ids
+
+  createlist item_ids
+
+  else
+
+  clearlist item_ids
+
+
+  endif
+    
+  # SET ITEM's TO CATALOG HERE #
+  
+  # Comment out any item types that you do not want to catalog.
+  # You can add other item types here as well, note that they have not been tested yet.
+  # Phylacteries
+  pushlist item_ids "Phylactery"    
+  # Skill Mastery Scrolls  
+  pushlist item_ids "scroll of calling"
+  # Aspect Cores
+  pushlist item_ids "aspect core"
+  pushlist item_ids "chroma core"
+  # Aspect Distillations 
+  pushlist item_ids "flask"
+  pushlist item_ids "chroma distil"
+  # Maps
+  pushlist item_ids "map"
+    
+  //split items
+  sysmsg "First we split item stacks..."
+  wait 500
+  sysmsg container_to_catalog
+  wait 500
+  //split items
+  foreach id in item_ids
+
+      while findtype id container_to_catalog as item
+          
+        lift item 1
+        
+        wait 500
+          
+        drop take_container
+        
+        wait 500
+        
+        ignore item
+      endwhile
+
+  endfor
+  clearignore
+  
+  //catalog items
+  sysmsg "Now we catalog items..."
+  wait 500
+  sysmsg take_container
+  wait 500
+  foreach id in item_ids
+
+  while findtype id take_container as item
+
+          getlabel item description
+
+          sysmsg description
+
+          wait 500
+          
+          ignore item
+          
+      endwhile
+
+  endfor
+  
+  wait 500
+  
+  clearignore
+  
+  sysmsg "Cataloguing done."
+  
+  wait 500
+  
+  sysmsg "You can now log out to create a journal entry. Finds your journal logs here: Game FolderClassicUODataClientJournalLogs"
+  
+  

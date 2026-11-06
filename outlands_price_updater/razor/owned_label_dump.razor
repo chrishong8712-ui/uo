@@ -1,0 +1,58 @@
+
+  # Read-only label dump for OCR. Does not move items (no lift/drop).
+  # Uses only commands already used in vendor.razor.
+  # Target the container to scan when prompted.
+
+  setvar scan_container
+
+  wait 250
+
+  dclick scan_container
+
+  wait 250
+
+  if not listexists item_ids
+
+  createlist item_ids
+
+  else
+
+  clearlist item_ids
+
+  endif
+
+  pushlist item_ids "Phylactery"
+  pushlist item_ids "scroll of calling"
+  pushlist item_ids "aspect core"
+  pushlist item_ids "chroma core"
+  pushlist item_ids "flask"
+  pushlist item_ids "chroma distil"
+  pushlist item_ids "map"
+  pushlist item_ids "ore map"
+  pushlist item_ids "lumber map"
+  pushlist item_ids "fishing map"
+  pushlist item_ids "skinning map"
+  pushlist item_ids "folded cloth"
+
+  sysmsg "Label dump start..."
+  wait 500
+
+  foreach id in item_ids
+
+      while findtype id scan_container as item
+
+          getlabel item description
+
+          sysmsg description
+
+          wait 500
+
+          ignore item
+
+      endwhile
+
+  endfor
+
+  clearignore
+
+  sysmsg "Label dump done."
